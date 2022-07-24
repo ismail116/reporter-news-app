@@ -7,7 +7,7 @@ const auth = async(req,res,next)=>{
         const token = req.header('Authorization').replace('Bearer ','')
         // console.log(token)
 
-        const decode =jwt.verify(token,'nodeCourse')
+        const decode =jwt.verify(token,JWT_SECERT)
         // console.log(decode)
 
         const reporter = await Reporter.findOne({_id:decode._id,tokens:token})
@@ -16,6 +16,7 @@ const auth = async(req,res,next)=>{
             throw new Error()
         }
         req.reporter = reporter
+        req.token = token
 
           next()
     }

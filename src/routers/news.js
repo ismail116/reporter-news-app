@@ -125,6 +125,19 @@ const uploads= multer({
         cb(null,true)
     }
 })
+   router.post('/newsImage',auth,uploads.single('image'),async(req,res)=>{
+    try{
+        const news = new News({...req.body,owner:req.reporter._id})
+        news.image = req.file.buffer
+        await news.save()
+        res.status(200).send(news)
+    
+    }
+    catch(e){
+        res.status(400).send(e.message)
+    }
+})
+//////////////////////////////////////////////////////////////////////////////
 // router.post('/newsImage/:id',auth,uploads.single('image'),async(req,res)=>{
 //     try{
         
@@ -133,7 +146,7 @@ const uploads= multer({
 //          if(!news){
 //           return res.status(404).send('Unable to find news')
 //         }
-//         req.news.avatar = req.file.buffer
+//         req.news.image = req.file.buffer
 //         await req.news.save()
 //         res.send()
 //     }
@@ -142,25 +155,25 @@ const uploads= multer({
 //     }
 // })
 ///////////////////////////////////////////////////////////////////////
-router.post('/newsImage/:id',auth,uploads.single('image'),async(req,res)=>{
-    try{
+// router.post('/newsImage/:id',auth,uploads.single('image'),async(req,res)=>{
+//     try{
         
-        const _id = req.params.id
-        const news = await News.findOne({_id,owner:req.reporter._id})
-        if(!news){
-            return res.status(404).send('no News is found to add image')
-        }
+//         const _id = req.params.id
+//         const news = await News.findOne({_id,owner:req.reporter._id})
+//         if(!news){
+//             return res.status(404).send('no News is found to add image')
+//         }
        
-        await news.populate('owner')
-        req.news.avatar = req.file.buffer
-        await req.news.save()
-        res.send()
-        // res.send(news.avatar)
-    }
-    catch(e){
-        res.status(400).send(e.message)
-    }
-})
+//         await news.populate('owner')
+//         req.news.image = req.file.buffer
+//         await req.news.save()
+//         res.send()
+//         // res.send(news.avatar)
+//     }
+//     catch(e){
+//         res.status(400).send(e.message)
+//     }
+// })
 
 ///////////////////////////////////////////////////////////////////////
 

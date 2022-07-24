@@ -18,8 +18,7 @@ const newsSchema = mongoose.Schema({
         required:true,
         ref:'Reporter'
     },
-
-    avatar:{
+    image:{
         type:Buffer
     }
 
@@ -27,5 +26,16 @@ const newsSchema = mongoose.Schema({
 { timestamps: true })
 
 const News = mongoose.model('News',newsSchema)
+///////////////////////////////////////////////////////////////////
+
+newsSchema.methods.toJSON = function(){
+    
+    const news = this
+
+    // toObject --> convert document --> object
+    const newsObject = news.toObject()
+
+    return newsObject
+}
 ///////////////////////////////////////////////////////////////////
 module.exports = News

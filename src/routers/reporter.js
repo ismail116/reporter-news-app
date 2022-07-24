@@ -76,6 +76,38 @@ router.delete('/reporters',auth,async(req,res)=>{
         res.status(500).send(e)
     }
 })
+//////////////////////////////////////////////////////////////////////////////
+
+//logout
+router.delete('/logout',auth,async(req,res)=>{
+    try{
+        req.reporter.tokens = req.reporter.tokens.filter((el)=>{
+
+            return el !== req.token
+        })  
+        await req.reporter.save()
+        res.status(200).send()
+    }
+    catch(e){
+        res.status(500).send(e)
+    }
+})
+
+//////////////////////////////////////////////////////////////////////////////
+//logout all 
+
+router.delete('/logoutAll',auth,async(req,res)=>{
+    try{
+        req.reporter.tokens = []
+        
+        await req.reporter.save()
+        res.status(200).send()
+    }
+    catch(e){
+        res.status(500).send(e)
+    }
+})
+
 ///////////////////////////////////////////////////////////////////////
 // images
 

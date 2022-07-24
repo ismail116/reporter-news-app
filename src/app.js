@@ -2,7 +2,8 @@ const express = require('express')
 const reporterRouter = require('./routers/reporter')
 const newsRouter = require('./routers/news')
 const app = express()
-const port = process.env.PORT || 3000
+require('dotenv').config()
+const port = process.env.PORT 
 
 // connect database
 require('./db/mongoose')
@@ -14,7 +15,7 @@ app.use(newsRouter)
 
 
 
-app.listen(port,()=>{console.log('Server is running')})
+app.listen(port,()=>{console.log('Server is running '+ port)})
 
 /////////////////////////////////////////////////////////////////
 

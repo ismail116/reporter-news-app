@@ -128,7 +128,7 @@ reporterSchema.pre('save',async function(){
 
 reporterSchema.methods.generateToken = async function(){
     const reporter = this
-    const token = jwt.sign({_id:reporter._id.toString()},'nodeCourse')
+    const token = jwt.sign({_id:reporter._id.toString()},JWT_SECERT)
    
     reporter.tokens = reporter.tokens.concat(token)
     await reporter.save()
